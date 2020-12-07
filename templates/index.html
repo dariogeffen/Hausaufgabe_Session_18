@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  </head>
+  <body>
+    {% if number %}
+    <h1>Unfortunately {{number}} is not the correct number</h1>
+    <h2>Please try again with a {{compare}} number</h2>
+    {% else  %}
+    <h1>Hey, {{number}}! Please guess a number between 1 and 30</h1>
+    {% endif %}
+    <form method="post" action="/game">
+    <input style= "width:200px" type="number" name="number" min="1" max="30" placeholder="Enter your guess">
+    <button type="submit">Submit</button>
+</form>
+  </body>
+</html>
