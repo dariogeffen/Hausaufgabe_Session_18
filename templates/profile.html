@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+
+{% block content %}
+<p><b>Your username: </b>{{username}}</p>
+<p><b>Your email: </b>{{email}}</p>
+    <form method="get" action="/profile/edit">
+        <button type="submit">Edit profile</button>
+    </form>
+    </form>
+    <form method="get" action="/profile/delete">
+        <button type="submit">Delete account</button>
+    </form>
+{% endblock %}

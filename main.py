@@ -7,7 +7,14 @@ db.create_all()
 
 @app.route("/", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    session_token = request.cookies.get("session_token")
+    user = db.query(User).filter_by(session_token=session_token).first()
+
+    if user:
+        response = make_response(redirect(url_for('game')))
+        return response
+    else:
+        return render_template("login.html")
 
 
 @app.route("/signed_up", methods=["POST"])
@@ -107,6 +114,55 @@ def newgame():
     response = make_response(redirect(url_for('game')))
     return response
 
+@app.route("/profile", methods=["GET"])
+def profile():
+    session_token = request.cookies.get("session_token")
+    user = db.query(User).filter_by(session_token=session_token).first()
+
+    if user:
+        username = user.name
+        email = user.email
+        return render_template("profile.html", email=email, username=username)
+    else:
+        return render_template("login.html")
+
+@app.route("/profile/edit", methods=["GET","POST"])
+def edit_profile():
+    session_token = request.cookies.get("session_token")
+    user = db.query(User).filter_by(session_token=session_token).first()
+
+    if user:
+        if request.method == "GET":
+            username = user.name
+            email = user.email
+            return render_template("edit-profile.html", username=username, email=email)
+        elif request.method == "POST":
+            new_email = request.form.get("new_email")
+            new_username = request.form.get("new_username")
+            user.name = new_username
+            user.email = new_email
+            db.add(user)
+            db.commit()
+            response = make_response(redirect(url_for('profile')))
+            return response
+    else:
+        return render_template("login.html")
+
+@app.route("/profile/delete", methods=["GET", "POST"])
+def delete_profile():
+    session_token = request.cookies.get("session_token")
+    user = db.query(User).filter_by(session_token=session_token).first()
+
+    if user:
+        username = user.name
+        if request.method == "GET":
+            return render_template("delete-account.html", username=username)
+        elif request.method == "POST":
+            db.delete(user)
+            db.commit()
+            return render_template("login.html", username=username)
+    else:
+        return render_template("login.html")
 
 if __name__ == '__main__':
     app.run()  # if you use the port parameter, delete it before deploying to Heroku

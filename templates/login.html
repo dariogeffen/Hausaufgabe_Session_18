@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+
+{% block content %}
 <h1>Login with your email-address and password</h1>
 <form method="post" action="/logged_in">
     <input type="email" name="user-email" placeholder="Enter your email address"><br>
@@ -19,5 +20,4 @@
     <button>Sign Up</button>
 </form>
 
-</body>
-</html>
+{% endblock %}
