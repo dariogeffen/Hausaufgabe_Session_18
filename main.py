@@ -43,6 +43,10 @@ def logged_in():
     secret_number = random.randint(1, 30)
     user = db.query(User).filter_by(email=email).first()
 
+    user = db.query(User).filter_by(email=email).first()
+
+    if not user:
+        return "There is no registered user with this email address. Pleas go back and sign up first."
     if hashed_password != user.password:
         return "WRONG PASSWORD! Go back and try again."
     elif hashed_password == user.password:
