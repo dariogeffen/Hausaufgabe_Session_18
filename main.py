@@ -3,7 +3,7 @@ from models import User, db
 import random, uuid, hashlib
 
 app = Flask(__name__)
-db.create_all()
+
 
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -165,4 +165,5 @@ def delete_profile():
         return render_template("login.html")
 
 if __name__ == '__main__':
+    db.create_all()
     app.run()  # if you use the port parameter, delete it before deploying to Heroku
