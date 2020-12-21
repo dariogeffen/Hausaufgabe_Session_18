@@ -6,13 +6,16 @@ Profile
 
 
 {% block content %}
-<p><b>Your username: </b>{{username}}</p>
-<p><b>Your email: </b>{{email}}</p>
+<p><b>Username: </b>{{username}}</p>
+<p><b>Email: </b>{{email}}</p>
     <form method="get" action="/profile/edit">
         <button type="submit">Edit profile</button>
     </form>
     </form>
     <form method="get" action="/profile/delete">
         <button type="submit">Delete account</button>
+    </form>
+    <form method="get" action="/profile/logout">
+        <button type="submit">Logout</button>
     </form>
 {% endblock %}

@@ -88,14 +88,10 @@ def game():
         elif int(guess) > int(secret):
             indication = "smaller"
             response = make_response(render_template("index.html", compare=indication, number=guess))
-            response.set_cookie("last_guess", guess)
-            response.set_cookie("indication", indication)
             return response
         elif int(guess) < int(secret):
             indication = "bigger"
             response = make_response(render_template("index.html", compare=indication, number=guess))
-            response.set_cookie("last_guess", guess)
-            response.set_cookie("indication", indication)
             return response
 
 @app.route("/success", methods=["GET", "POST"])
@@ -163,6 +159,33 @@ def delete_profile():
             return render_template("login.html", username=username)
     else:
         return render_template("login.html")
+
+
+@app.route("/profile/logout", methods=["GET", "POST"])
+def logout():
+    session_token = request.cookies.get("session_token")
+    user = db.query(User).filter_by(session_token=session_token).first()
+
+    if user:
+        if request.method == "GET":
+            response = make_response(redirect(url_for('login')))
+            response.delete_cookie("session_token")
+            return response
+    else:
+        return render_template("login.html")
+
+
+@app.route("/users", methods=["GET"])
+def all_users():
+    users = db.query(User).all()
+
+    return render_template("users.html", users=users)
+
+@app.route("/users/<user_id>", methods=["GET"])
+def user_details(user_id):
+    user = db.query(User).get(int(user_id))
+    return render_template("user-details.html", user=user)
+
 
 if __name__ == '__main__':
     db.create_all()

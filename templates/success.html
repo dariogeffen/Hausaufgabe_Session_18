@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-  </head>
-  <body>
-  {% if number %}
-    <h1>You did it {{name}}! {{number}} was the correct number :)</h1>
-  {% endif %}
+{% extends "base.html" %}
+
+{% block title %}You did it {{name}}!{% endblock title %}
+
+{% block content %}
+    <h1> {{number}} was the correct number :)</h1>
     <form method="get" action="/newgame">
     <button type="submit">Start again</button>
 </form>
-  </body>
-</html>
+{% endblock content %}
