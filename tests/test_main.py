@@ -24,5 +24,5 @@ def test_index_logged_in(client):
     client.post('/signed_up', data={"user-name": "Test User", "user-email": "test@user.com",
                                 "user-password": "password123"}, follow_redirects=True)
 
-    response = client.get('/')
+    response = client.get('/', follow_redirects=True)
     assert b'Please guess a number' in response.data

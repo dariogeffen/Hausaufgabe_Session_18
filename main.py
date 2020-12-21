@@ -83,7 +83,6 @@ def game():
         guess = str(request.form.get("number"))
         if guess == secret:
             response = make_response(render_template("success.html", number=guess, name=name))
-            response.set_cookie("last_guess", guess)
             return response
         elif int(guess) > int(secret):
             indication = "smaller"
